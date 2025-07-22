@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Perencanaan Pembelajaran Mendalam (SMA)</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+        .title-font {
+            font-family: 'Roboto Slab', serif;
+        }
+        .prose-output h2 {
+            font-family: 'Roboto Slab', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #1e3a8a; /* dark blue */
+            margin-top: 1.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #93c5fd; /* light blue */
+        }
+        .prose-output h3 {
+            font-family: 'Roboto Slab', serif;
+            font-size: 1.25em;
+            font-weight: 700;
+            color: #1f2937;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .prose-output h4 {
+            font-family: 'Roboto Slab', serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #374151;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .prose-output ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        .prose-output p, .prose-output li {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+        .prose-output strong {
+            font-weight: 600;
+            color: #111827;
+        }
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.75rem;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .rpp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .rpp-table th, .rpp-table td {
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .rpp-table th {
+            background-color: #eef2ff;
+            font-weight: 700;
+            width: 25%;
+        }
+        .rpp-table td {
+            background-color: #ffffff;
+        }
+        .activity-box {
+            background-color: #f3f4f6;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.25rem;
+        }
+        /* Print styles */
+        @media print {
+            body, #main-container, main {
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+            body * {
+                visibility: hidden;
+            }
+            #printable-area, #printable-area * {
+                visibility: visible;
+            }
+            #printable-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .prose-output h2 {
+                color: #000000 !important;
+                border-bottom: 2px solid #cccccc !important;
+            }
+            .rpp-table th {
+                background-color: #f0f0f0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div id="main-container" class="container mx-auto px-4 py-8 md:py-12 max-w-6xl">
+        
+        <main class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+            
+            <form id="form-section">
+                <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-lg mb-10 flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-white/20 p-3 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="title-font text-2xl font-bold">Generator RPP Mendalam</h1>
+                            <p class="text-blue-200">Pembelajaran Berbasis Problem Solving</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/20 text-white font-bold px-4 py-2 rounded-lg text-sm">
+                        2025
+                    </div>
+                </header>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                    <div>
+                        <label for="teacherName" class="block text-sm font-medium text-gray-700 mb-1">Nama Guru</label>
+                        <input type="text" id="teacherName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition" value="">
+                    </div>
+                    <div>
+                        <label for="schoolName" class="block text-sm font-medium text-gray-700 mb-1">Nama Sekolah</label>
+                        <input type="text" id="schoolName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition" value="">
+                    </div>
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Mata Pelajaran</label>
+                        <input type="text" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition" value="">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Jenjang Kelas</label>
+                        <div class="flex items-center gap-4 mt-2">
+                            <label class="flex items-center"><input type="radio" name="kelas" value="X" class="h-4 w-4 text-blue-600" checked><span class="ml-2">X</span></label>
+                            <label class="flex items-center"><input type="radio" name="kelas" value="XI" class="h-4 w-4 text-blue-600"><span class="ml-2">XI</span></label>
+                            <label class="flex items-center"><input type="radio" name="kelas" value="XII" class="h-4 w-4 text-blue-600"><span class="ml-2">XII</span></label>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="timeAllocation" class="block text-sm font-medium text-gray-700 mb-1">Alokasi Waktu (JP)</label>
+                        <input type="number" id="timeAllocation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition" value="">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="topic" class="block text-sm font-medium text-gray-700 mb-1">Topik Pembelajaran</label>
+                        <input type="text" id="topic" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition" value="">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="specificMaterial" class="block text-sm font-medium text-gray-700 mb-1">Materi Spesifik</label>
+                        <textarea id="specificMaterial" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition" placeholder="Jelaskan materi yang akan dibahas lebih detail."></textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Dimensi Profil Lulusan</label>
+                        <div id="profileDimensions" class="checkbox-grid"></div>
+                    </div>
+                     <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Fokus Kegiatan Inti (untuk 1 RPP)</label>
+                        <div id="coreActivityFocus" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-blue-50"><input type="radio" name="kegiatanInti" value="lengkap" class="h-4 w-4 text-blue-600" checked><span class="ml-2 text-sm">Siklus Lengkap</span></label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-blue-50"><input type="radio" name="kegiatanInti" value="memahami" class="h-4 w-4 text-blue-600"><span class="ml-2 text-sm">Hanya Memahami</span></label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-blue-50"><input type="radio" name="kegiatanInti" value="mengaplikasi" class="h-4 w-4 text-blue-600"><span class="ml-2 text-sm">Hanya Mengaplikasi</span></label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-blue-50"><input type="radio" name="kegiatanInti" value="merefleksi" class="h-4 w-4 text-blue-600"><span class="ml-2 text-sm">Hanya Merefleksi</span></label>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Level Kognitif Siswa</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-blue-50"><input type="radio" name="kognitif" value="lengkap" class="h-4 w-4 text-blue-600" checked><span class="ml-2 text-sm">Lengkap (Semua Level)</span></label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-blue-50"><input type="radio" name="kognitif" value="tinggi" class="h-4 w-4 text-blue-600"><span class="ml-2 text-sm">Tinggi</span></label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-blue-50"><input type="radio" name="kognitif" value="sedang" class="h-4 w-4 text-blue-600"><span class="ml-2 text-sm">Sedang</span></label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-blue-50"><input type="radio" name="kognitif" value="rendah" class="h-4 w-4 text-blue-600"><span class="ml-2 text-sm">Rendah</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button type="button" id="generate-btn" class="w-full md:w-auto bg-blue-600 text-white font-bold px-10 py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all shadow-md hover:shadow-lg">
+                        Generate Perencanaan Pembelajaran
+                    </button>
+                </div>
+            </form>
+            
+            <div id="result-section" class="mt-12 hidden">
+                 <div class="relative border-b-2 border-gray-200 pb-3 mb-6">
+                    <div class="text-center">
+                        <h2 class="title-font text-2xl font-bold text-blue-800 m-0 p-0">PERENCANAAN PEMBELAJARAN MENDALAM</h2>
+                        <p class="font-semibold text-gray-600">Pembelajaran Berbasis Problem Solving</p>
+                    </div>
+                    <div id="button-group" class="absolute top-0 right-0 flex items-center gap-2">
+                        <button id="print-btn" class="bg-green-600 text-white font-medium px-3 py-2 rounded-lg hover:bg-green-700 transition text-sm flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>Print</button>
+                        <button id="copy-btn" class="bg-blue-600 text-white font-medium px-3 py-2 rounded-lg hover:bg-blue-700 transition text-sm flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1-1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zM-1 7a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H-0.5A.5.5 0 0 1-1 7zM5 11.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/></svg>Copy</button>
+                        <button id="reset-btn" class="bg-slate-600 text-white font-medium px-3 py-2 rounded-lg hover:bg-slate-700 transition text-sm flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/><path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/></svg>Reset</button>
+                    </div>
+                </div>
+                <div id="printable-area">
+                    <div id="result-content" class="prose-output mt-4"></div>
+                    <div id="lampiran-placeholder" class="text-center py-12 text-gray-500 border-2 border-dashed rounded-lg mt-8 hidden"></div>
+                    <div id="lampiran-content" class="prose-output mt-8"></div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="text-center mt-10 text-sm text-gray-500">
+            <p>Aplikasi dikembangkan oleh @maamratmi &copy; 2025</p>
+            <a href="https://wa.me/6285267682771" target="_blank" class="inline-flex items-center gap-1 text-green-600 hover:text-green-700 mt-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+                Kritik dan saran
+            </a>
+        </footer>
+    </div>
+
+    <script>
+        const dimensions = ["Penalaran kritis", "Kreativitas", "Kolaborasi", "Kemandirian", "Komunikasi", "Keimanan dan ketakwaan kepada Tuhan YME", "Kewargaan", "Kesehatan"];
+        const dimensionsContainer = document.getElementById('profileDimensions');
+        dimensions.forEach(dim => {
+            dimensionsContainer.innerHTML += `<label class="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border hover:bg-gray-100 transition cursor-pointer"><input type="checkbox" name="profileDimension" value="${dim}" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"><span class="text-gray-800">${dim}</span></label>`;
+        });
+
+        const generateBtn = document.getElementById('generate-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const printBtn = document.getElementById('print-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const resultSection = document.getElementById('result-section');
+        const resultContent = document.getElementById('result-content');
+        const lampiranPlaceholder = document.getElementById('lampiran-placeholder');
+        const lampiranContent = document.getElementById('lampiran-content');
+        const form = document.getElementById('form-section');
+        
+        const teacherNameInput = document.getElementById('teacherName');
+        const schoolNameInput = document.getElementById('schoolName');
+        const subjectInput = document.getElementById('subject');
+        const timeAllocationInput = document.getElementById('timeAllocation');
+        const topicInput = document.getElementById('topic');
+        const specificMaterialInput = document.getElementById('specificMaterial');
+
+        async function callGeminiAPI(prompt) {
+            const apiKey = ""; // Handled by environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (!response.ok) throw new Error(`API Error: ${response.status}`);
+            const result = await response.json();
+            if (result.candidates && result.candidates[0].content.parts.length > 0) {
+                return result.candidates[0].content.parts[0].text;
+            }
+            throw new Error("Respon dari AI tidak valid.");
+        }
+        
+        function getKegiatanIntiPrompt(kognitifSelection) {
+            const selection = document.querySelector('input[name="kegiatanInti"]:checked').value;
+            let cognitiveInstruction = `(Aktivitas disesuaikan untuk level kognitif ${kognitifSelection})`;
+            if (kognitifSelection === 'lengkap') {
+                cognitiveInstruction = `(Aktivitas dirancang untuk dapat diadaptasi untuk semua level kognitif)`;
+            }
+
+            switch(selection) {
+                case 'memahami':
+                    return `<h3>B. KEGIATAN INTI (Fokus: MEMAHAMI)</h3>
+                    <p>Pertemuan ini berfokus pada tahap pemahaman masalah dan konsep dasar. ${cognitiveInstruction}</p>
+                    <div class="activity-box"><h4>Tahap 1: MEMAHAMI (Berkesadaran)</h4><p><strong>Aktivitas:</strong> (Uraikan secara SANGAT DETAIL aktivitas siswa untuk menganalisis masalah/contoh. Berikan langkah-langkah konkret.)</p><ul><li>(Detail aktivitas 1)</li><li>(Detail aktivitas 2)</li></ul></div>
+                    <p><strong>Catatan:</strong> Tahap Mengaplikasi dan Merefleksi akan dilaksanakan pada pertemuan berikutnya.</p>`;
+                case 'mengaplikasi':
+                     return `<h3>B. KEGIATAN INTI (Fokus: MENGAPLIKASI)</h3>
+                    <p>Pertemuan ini berfokus pada tahap perancangan solusi. ${cognitiveInstruction}</p>
+                    <div class="activity-box"><h4>Tahap 2: MENGAPLIKASI (Bermakna & Menggembirakan)</h4><p><strong>Aktivitas:</strong> (Uraikan secara SANGAT DETAIL aktivitas siswa untuk merancang dan membuat draf solusi/produk.)</p><ul><li>(Detail aktivitas 1: Brainstorming & Riset)</li><li>(Detail aktivitas 2: Menyusun kerangka)</li><li>(Detail aktivitas 3: Menulis draf pertama)</li></ul></div>
+                    <p><strong>Catatan:</strong> Tahap Merefleksi akan dilaksanakan pada pertemuan berikutnya.</p>`;
+                case 'merefleksi':
+                    return `<h3>B. KEGIATAN INTI (Fokus: MEREFLEKSI)</h3>
+                    <p>Pertemuan ini berfokus pada tahap evaluasi dan perbaikan. ${cognitiveInstruction}</p>
+                    <div class="activity-box"><h4>Tahap 3: MEREFLEKSI (Bermakna & Berkesadaran)</h4><p><strong>Aktivitas:</strong> (Uraikan secara SANGAT DETAIL aktivitas siswa untuk evaluasi dan perbaikan, termasuk peer review dan refleksi individual.)</p><ul><li>(Detail aktivitas 1: Presentasi / Gallery Walk)</li><li>(Detail aktivitas 2: Peer Review dengan checklist)</li><li>(Detail aktivitas 3: Refleksi Individual Terbimbing)</li></ul></div>`;
+                default: // 'lengkap'
+                    return `<h3>B. KEGIATAN INTI (Problem-Solving Cycle)</h3>
+                    <div class="activity-box"><h4>Tahap 1: MEMAHAMI</h4><p><strong>Aktivitas:</strong> (Uraikan aktivitas siswa untuk menganalisis masalah/contoh)</p><ul><li>(Detail aktivitas 1)</li><li>(Detail aktivitas 2)</li></ul></div>
+                    <div class="activity-box"><h4>Tahap 2: MENGAPLIKASI</h4><p><strong>Aktivitas:</strong> (Uraikan aktivitas siswa untuk merancang solusi)</p><ul><li>(Detail aktivitas 1)</li><li>(Detail aktivitas 2)</li></ul></div>
+                    <div class="activity-box"><h4>Tahap 3: MEREFLEKSI</h4><p><strong>Aktivitas:</strong> (Uraikan aktivitas siswa untuk evaluasi dan perbaikan)</p><ul><li>(Detail aktivitas 1)</li><li>(Detail aktivitas 2)</li></ul></div>`;
+            }
+        }
+
+        async function handleGenerateClick() {
+            // Validation
+            const requiredFields = [teacherNameInput, schoolNameInput, subjectInput, timeAllocationInput, topicInput, specificMaterialInput];
+            if (requiredFields.some(field => !field.value)) {
+                alert('Harap isi semua kolom data.');
+                return;
+            }
+            const selectedDimensions = Array.from(document.querySelectorAll('input[name="profileDimension"]:checked')).map(cb => cb.value);
+            if (selectedDimensions.length === 0) {
+                alert('Harap pilih minimal satu Dimensi Profil Lulusan.');
+                return;
+            }
+
+            // UI Loading State
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = `Memproses RPP...`;
+            resultSection.classList.remove('hidden');
+            resultContent.innerHTML = `<div class="flex justify-center items-center flex-col p-8"><svg class="animate-spin h-8 w-8 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="font-semibold text-lg">AI sedang menyusun RPP, mohon tunggu...</p></div>`;
+            lampiranPlaceholder.classList.add('hidden');
+            lampiranContent.innerHTML = '';
+
+            const kognitifSelection = document.querySelector('input[name="kognitif"]:checked').value;
+            const kelasSelection = document.querySelector('input[name="kelas"]:checked').value;
+            const kegiatanIntiPrompt = getKegiatanIntiPrompt(kognitifSelection);
+
+            const rppPrompt = `PERINTAH LANGSUNG: Hasilkan RPP Pembelajaran Mendalam dalam format HTML. JANGAN TAMBAHKAN TEKS PEMBUKA. Langsung mulai dengan tag \`<h2>\`. Adaptasi konten untuk Kelas ${kelasSelection} dan level kognitif siswa: ${kognitifSelection}.
+
+            Gunakan data berikut:
+            - Guru: ${teacherNameInput.value}, Sekolah: ${schoolNameInput.value}
+            - Mapel: ${subjectInput.value}, Kelas: ${kelasSelection}
+            - Alokasi: ${timeAllocationInput.value} JP
+            - Topik: ${topicInput.value}, Materi Spesifik: ${specificMaterialInput.value}
+            - Profil Lulusan: ${selectedDimensions.join(', ')}
+            
+            Gunakan struktur HTML ini:
+            <h2>1. IDENTITAS & IDENTIFIKASI</h2>
+            <div class="table-container"><table class="rpp-table">
+            <tr><th>Nama Penyusun</th><td>${teacherNameInput.value}</td></tr>
+            <tr><th>Satuan Pendidikan</th><td>${schoolNameInput.value}</td></tr>
+            <tr><th>Mata Pelajaran</th><td>${subjectInput.value}</td></tr>
+            <tr><th>Kelas / Fase</th><td>${kelasSelection} / ${kelasSelection === 'X' ? 'E' : 'F'}</td></tr>
+            <tr><th>Alokasi Waktu</th><td>${timeAllocationInput.value} JP</td></tr>
+            <tr><th>Estimasi Pertemuan</th><td>(Berdasarkan fokus kegiatan, berikan estimasi jumlah pertemuan yang realistis. Contoh: 1-2 Pertemuan)</td></tr>
+            <tr><th>Karakteristik Peserta Didik</th><td>(Jelaskan secara naratif asumsi pengetahuan awal siswa, sesuaikan dengan level kognitif ${kognitifSelection}.)</td></tr>
+            <tr><th>Dimensi Profil Lulusan</th><td>(Jelaskan secara naratif bagaimana profil ${selectedDimensions.join(', ')} akan dikembangkan.)</td></tr>
+            </table></div>
+
+            <h2>2. DESAIN PEMBELAJARAN</h2>
+            <div class="table-container"><table class="rpp-table">
+            <tr><th>Tujuan Pembelajaran</th><td>(Rumuskan 2-3 tujuan pembelajaran yang dapat diadaptasi untuk level kognitif ${kognitifSelection}.)</td></tr>
+            <tr><th>Pemicu (Problem-Solving)</th><td>(Sajikan skenario masalah yang relevan, sesuaikan kompleksitasnya untuk level ${kognitifSelection}.)</td></tr>
+            <tr><th>Praktik Pedagogis</th><td>Pembelajaran Berbasis Masalah, Pembelajaran Berdiferensiasi (Konten, Proses, Produk).</td></tr>
+            </table></div>
+
+            <h2>3. PENGALAMAN BELAJAR (LANGKAH-LANGKAH PEMBELAJARAN)</h2>
+            <h3>A. KEGIATAN AWAL</h3>
+            <ul><li><strong>Orientasi & Apersepsi:</strong> (Jelaskan aktivitas guru dan siswa)</li><li><strong>Motivasi & Pemicu Masalah:</strong> (Jelaskan aktivitas guru dan siswa)</li><li><strong>Penyampaian Tujuan:</strong> (Jelaskan aktivitas guru dan siswa)</li></ul>
+            ${kegiatanIntiPrompt}
+            <h3>C. KEGIATAN PENUTUP</h3>
+            <ul><li><strong>Kesimpulan:</strong> (Jelaskan aktivitas guru dan siswa)</li><li><strong>Apresiasi & Refleksi Akhir:</strong> (Jelaskan aktivitas guru dan siswa)</li></ul>
+
+            <h2>4. ASESMEN PEMBELAJARAN</h2>
+            <div class="table-container"><table class="rpp-table">
+            <tr><th>Asesmen Awal (Diagnostik)</th><td>(Jelaskan teknik dan contoh instrumen)</td></tr>
+            <tr><th>Asesmen Proses (Formatif)</th><td>(Jelaskan teknik dan contoh instrumen, misal: rubrik observasi)</td></tr>
+            <tr><th>Asesmen Akhir (Sumatif)</th><td>(Jelaskan teknik dan contoh instrumen, misal: rubrik penilaian produk yang bisa diadaptasi untuk level ${kognitifSelection})</td></tr>
+            </table></div>`;
+
+            try {
+                const rppResult = await callGeminiAPI(rppPrompt);
+                resultContent.innerHTML = rppResult;
+                
+                generateBtn.innerHTML = `Membuat Lampiran...`;
+                lampiranPlaceholder.innerHTML = `<div class="flex justify-center items-center flex-col p-8"><svg class="animate-spin h-8 w-8 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="font-semibold text-lg">AI sedang menyusun Lampiran, mohon tunggu...</p></div>`;
+                lampiranPlaceholder.classList.remove('hidden');
+
+                await generateAppendices(kognitifSelection);
+
+            } catch (error) {
+                resultContent.innerHTML = `<p class="text-red-600 font-semibold p-8">Terjadi kesalahan saat membuat RPP. Silakan coba lagi.<br>Detail: ${error.message}</p>`;
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = `Generate Perencanaan Pembelajaran`;
+            }
+        }
+        
+        async function generateAppendices(kognitifSelection) {
+            let mediaPembelajaranPrompt = `<h3>A. Materi Ajar Ringkas</h3> (Buat ringkasan materi kunci tentang "${specificMaterialInput.value}" yang disesuaikan untuk level kognitif ${kognitifSelection}.)`;
+
+            if (kognitifSelection === 'lengkap') {
+                mediaPembelajaranPrompt = `<h3>A. Materi Ajar Berdiferensiasi</h3>
+                <p>Berikut adalah contoh teks deskriptif yang disajikan dalam tiga level berbeda untuk mengakomodasi kebutuhan kognitif siswa yang beragam.</p>
+                <h4>1. Teks untuk Level Kognitif Rendah</h4>
+                <p><strong>Fokus:</strong> Kalimat pendek, kosakata dasar, struktur sangat jelas.</p>
+                <div class="activity-box">(Buatkan sebuah teks deskriptif singkat dan sederhana tentang tempat wisata, sesuai topik.)</div>
+                <h4>2. Teks untuk Level Kognitif Sedang</h4>
+                <p><strong>Fokus:</strong> Kalimat lebih bervariasi, kosakata standar, detail yang cukup.</p>
+                <div class="activity-box">(Buatkan sebuah teks deskriptif dengan panjang dan kompleksitas standar tentang tempat wisata yang sama.)</div>
+                <h4>3. Teks untuk Level Kognitif Tinggi</h4>
+                <p><strong>Fokus:</strong> Kalimat kompleks, kosakata kaya dan variatif, detail yang mendalam dan menarik.</p>
+                <div class="activity-box">(Buatkan sebuah teks deskriptif yang lebih panjang dan kaya secara bahasa tentang tempat wisata yang sama.)</div>`;
+            }
+
+            const lampiranPrompt = `PERINTAH LANGSUNG: Buatkan lampiran pembelajaran dalam format HTML. JANGAN TAMBAHKAN TEKS PEMBUKA. Langsung mulai dengan tag \`<h2>\`.
+
+            Berdasarkan data RPP berikut:
+            - Mapel: ${subjectInput.value}
+            - Topik: ${topicInput.value}
+            - Materi Spesifik: ${specificMaterialInput.value}
+            - Level Kognitif: ${kognitifSelection}
+
+            Struktur Lampiran:
+            <h2>5. LAMPIRAN PEMBELAJARAN</h2>
+            ${mediaPembelajaranPrompt}
+            <h3>B. Lembar Kerja Peserta Didik (LKPD)</h3>
+            <div class="table-container"><table class="rpp-table">
+            <tr><th colspan="2" style="text-align:center; background-color: #dbeafe;">LEMBAR KERJA PESERTA DIDIK (LKPD)</th></tr>
+            <tr><th>Mata Pelajaran</th><td>${subjectInput.value}</td></tr>
+            <tr><th>Topik</th><td>${topicInput.value}</td></tr>
+            <tr><th>Tujuan</th><td>(Sebutkan 1-2 tujuan yang relevan dengan LKPD ini, sesuaikan untuk level ${kognitifSelection}.)</td></tr>
+            <tr><th>Langkah Kerja</th><td>(Berikan instruksi langkah demi langkah yang jelas dan terscaffolding untuk level ${kognitifSelection}.)</td></tr>
+            <tr><th>Tugas / Pertanyaan</th><td>(Berikan 2-3 pertanyaan atau tugas investigasi yang sesuai dengan level kognitif ${kognitifSelection}.)</td></tr>
+            </table></div>
+            <h3>C. Instrumen dan Rubrik Penilaian</h3>
+            <h4>Rubrik Penilaian Produk (Asesmen Sumatif)</h4>
+            <div class="table-container"><table class="rpp-table"><thead style="background-color: #dbeafe;"><tr><th>Kriteria</th><th>Sangat Baik (4)</th><th>Baik (3)</th><th>Cukup (2)</th><th>Perlu Bimbingan (1)</th></tr></thead>
+            <tbody>
+            <tr><th>Struktur Teks</th><td>(Deskripsikan kriteria skor 4)</td><td>(Deskripsikan kriteria skor 3)</td><td>(Deskripsikan kriteria skor 2)</td><td>(Deskripsikan kriteria skor 1)</td></tr>
+            <tr><th>Kekayaan Kosakata & Unsur Kebahasaan</th><td>(Deskripsikan kriteria skor 4)</td><td>(Deskripsikan kriteria skor 3)</td><td>(Deskripsikan kriteria skor 2)</td><td>(Deskripsikan kriteria skor 1)</td></tr>
+            <tr><th>Kejelasan & Kerincian Isi</th><td>(Deskripsikan kriteria skor 4)</td><td>(Deskripsikan kriteria skor 3)</td><td>(Deskripsikan kriteria skor 2)</td><td>(Deskripsikan kriteria skor 1)</td></tr>
+            </tbody></table></div>
+            <h3>D. Glosarium</h3>
+            (Sajikan 3-5 istilah penting terkait topik beserta penjelasannya.)`;
+
+            try {
+                const lampiranResult = await callGeminiAPI(lampiranPrompt);
+                lampiranContent.innerHTML = lampiranResult;
+            } catch (error) {
+                 lampiranContent.innerHTML = `<p class="text-red-600 font-semibold p-8">Gagal membuat lampiran.<br>Detail: ${error.message}</p>`;
+            } finally {
+                lampiranPlaceholder.classList.add('hidden');
+            }
+        }
+
+        function handlePrintClick() {
+            window.print();
+        }
+
+        function handleCopyClick() {
+            const printableArea = document.getElementById('printable-area');
+            const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1-1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zM-1 7a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H-0.5A.5.5 0 0 1-1 7zM5 11.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/></svg>Copy`;
+            
+            // Create a temporary element to hold the HTML content
+            const tempDiv = document.createElement('div');
+            tempDiv.contentEditable = true;
+            
+            // Clone the printable area and apply inline styles for Word
+            const clone = printableArea.cloneNode(true);
+            clone.querySelectorAll('.rpp-table').forEach(table => {
+                table.style.width = '100%';
+                table.style.borderCollapse = 'collapse';
+            });
+            tempDiv.innerHTML = clone.innerHTML;
+
+            tempDiv.style.position = 'absolute';
+            tempDiv.style.left = '-9999px';
+            document.body.appendChild(tempDiv);
+
+            // Select the content of the temporary element
+            const range = document.createRange();
+            range.selectNodeContents(tempDiv);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            let success = false;
+            try {
+                // Execute the copy command
+                success = document.execCommand('copy');
+            } catch (err) {
+                console.error('Gagal menyalin konten: ', err);
+                success = false;
+            }
+
+            // Clean up
+            selection.removeAllRanges();
+            document.body.removeChild(tempDiv);
+
+            if (success) {
+                copyBtn.innerHTML = 'Disalin!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = copyIcon;
+                }, 2000);
+            } else {
+                alert('Gagal menyalin konten secara otomatis. Silakan coba salin manual.');
+            }
+        }
+
+
+        function handleResetClick() {
+            form.reset();
+            resultSection.classList.add('hidden');
+            resultContent.innerHTML = '';
+            lampiranContent.innerHTML = '';
+            generateBtn.disabled = false;
+            generateBtn.innerHTML = `Generate Perencanaan Pembelajaran`;
+        }
+        
+        generateBtn.addEventListener('click', handleGenerateClick);
+        printBtn.addEventListener('click', handlePrintClick);
+        copyBtn.addEventListener('click', handleCopyClick);
+        resetBtn.addEventListener('click', handleResetClick);
+
+    </script>
+</body>
+</html>
